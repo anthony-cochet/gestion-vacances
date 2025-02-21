@@ -3,3 +3,23 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+vacances_index:
+    path: /vacances
+    controller: App\Controller\VacancesController::index
+    methods: [GET]
+
+vacances_new:
+    path: /vacances/new
+    controller: App\Controller\VacancesController::new
+    methods: [GET, POST]
+
+vacances_edit:
+    path: /vacances/{id}/edit
+    controller: App\Controller\VacancesController::edit
+    methods: [GET, POST]
+
+vacances_delete:
+    path: /vacances/{id}
+    controller: App\Controller\VacancesController::delete
+    methods: [POST]

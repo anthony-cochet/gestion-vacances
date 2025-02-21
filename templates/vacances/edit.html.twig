@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier la période de vacances{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-warning text-dark">
+            <h2 class="text-center">Modifier la période de vacances</h2>
+        </div>
+        <div class="card-body">
+            {{ form_start(form) }}
+                
+                <div class="mb-3">
+                    {{ form_label(form.employe, 'Employé') }}
+                    {{ form_widget(form.employe, {'attr': {'class': 'form-control'}}) }}
+                    <div class="text-danger">{{ form_errors(form.employe) }}</div>
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.dateDebut, 'Date de Début') }}
+                    {{ form_widget(form.dateDebut, {'attr': {'class': 'form-control'}}) }}
+                    <div class="text-danger">{{ form_errors(form.dateDebut) }}</div>
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.dateFin, 'Date de Fin') }}
+                    {{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
+                    <div class="text-danger">{{ form_errors(form.dateFin) }}</div>
+                </div>
+
+            {{ form_end(form) }}
+
+            <div class="card-footer mt-3">
+                <div class="d-flex justify-content-between">
+                    <a href="{{ path('vacances_index') }}" class="btn btn-secondary">Retour</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

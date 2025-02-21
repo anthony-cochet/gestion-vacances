@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Périodes de Vacances{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Périodes de Vacances</h1>
+        <a href="{{ path('vacances_new') }}" class="btn btn-primary mb-3">Ajouter une période</a>
+        
+        {% if vacances|length > 0 %}
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Employé</th>
+                        <th>Date Début</th>
+                        <th>Date Fin</th>
+                        <th>Jours Fériés Inclus</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vacance in vacances %}
+                        <tr>
+                            <td>{{ vacance.employe.nom }}</td>
+                            <td>{{ vacance.dateDebut|date('d/m/Y') }}</td>
+                            <td>{{ vacance.dateFin|date('d/m/Y') }}</td>
+                            <td>
+                                {% set joursFeries = vacance.getJoursFeriesInclus() %}
+                                {% if joursFeries is not empty %}
+                                    <ul>
+                                        {% for nom, date in joursFeries %}
+                                            <li>{{ nom }} ({{ date }})</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <span class="text-muted">Aucun</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ path('vacances_edit', {id: vacance.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                                <form method="post" action="{{ path('vacances_delete', {id: vacance.id}) }}" onsubmit="return confirm('Confirmer la suppression?');" class="d-inline">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ vacance.id) }}">
+                                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-center text-muted">Aucune période de vacances enregistrée.</p>
+        {% endif %}
+    </div>
+{% endblock %}
